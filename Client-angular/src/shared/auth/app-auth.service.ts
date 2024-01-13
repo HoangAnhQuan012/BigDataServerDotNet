@@ -29,7 +29,7 @@ export class AppAuthService {
     logout(reload?: boolean): void {
         abp.auth.clearToken();
         abp.utils.deleteCookie(AppConsts.authorization.encryptedAuthTokenName);
-        
+
         if (reload !== false) {
             location.href = AppConsts.appBaseUrl;
         }

@@ -31,12 +31,10 @@ import { ResetPasswordDialogComponent } from './users/reset-password/reset-passw
 // layout
 import { HeaderComponent } from './layout/header.component';
 import { HeaderLeftNavbarComponent } from './layout/header-left-navbar.component';
-import { HeaderLanguageMenuComponent } from './layout/header-language-menu.component';
 import { HeaderUserMenuComponent } from './layout/header-user-menu.component';
 import { FooterComponent } from './layout/footer.component';
 import { SidebarComponent } from './layout/sidebar.component';
 import { SidebarLogoComponent } from './layout/sidebar-logo.component';
-import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 
 @NgModule({
@@ -61,12 +59,10 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
         // layout
         HeaderComponent,
         HeaderLeftNavbarComponent,
-        HeaderLanguageMenuComponent,
         HeaderUserMenuComponent,
         FooterComponent,
         SidebarComponent,
         SidebarLogoComponent,
-        SidebarUserPanelComponent,
         SidebarMenuComponent
     ],
     imports: [
