@@ -14,6 +14,7 @@ import { AbpValidationSummaryComponent } from './components/validation/abp-valid
 import { AbpModalHeaderComponent } from './components/modal/abp-modal-header.component';
 import { AbpModalFooterComponent } from './components/modal/abp-modal-footer.component';
 import { LayoutStoreService } from './layout/layout-store.service';
+import { FastApiService } from './services/fastApi.service';
 
 import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
@@ -37,7 +38,7 @@ import { ChartModule } from 'primeng/chart';
         AbpModalFooterComponent,
         LocalizePipe,
         BusyDirective,
-        EqualValidator
+        EqualValidator,
     ],
     exports: [
         AbpPaginationControlsComponent,
@@ -61,7 +62,8 @@ export class SharedModule {
                 AppUrlService,
                 AppAuthService,
                 AppRouteGuard,
-                LayoutStoreService
+                LayoutStoreService,
+                FastApiService
             ]
         };
     }
