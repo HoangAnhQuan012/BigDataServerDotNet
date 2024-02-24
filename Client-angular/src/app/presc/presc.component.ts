@@ -6,6 +6,7 @@ import { DfPrescSelService } from '@shared/services/df-presc.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CreateOrEditPrescComponent } from './create-or-edit-presc/create-or-edit-presc.component';
 import { AppComponentBase } from '@shared/app-component-base';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-presc',
@@ -23,7 +24,7 @@ export class PrescComponent extends AppComponentBase implements OnInit {
   rowsPerPageOptions = [10, 20, 50, 100, 200, 500, 1000];
   scrollable = true;
   scrollHeight = '700px';
-  skip = 0;
+  first = 0;
 
   // tslint:disable-next-line:no-inferrable-types
   keyword: string = '';
@@ -37,23 +38,29 @@ export class PrescComponent extends AppComponentBase implements OnInit {
     private confirmationService: ConfirmationService,
   ) {
     super(injector);
-   }
+  }
 
   ngOnInit() {
   }
 
   getDataPage(lazyload?: LazyLoadEvent) {
-    let maxResultCount = this.table?.rows;
-
-    if (lazyload) {
-      this.skip = lazyload.first ?? this.skip;
-      maxResultCount = lazyload.rows ?? maxResultCount;
-    }
+    this.loading = true;
     this.keyword = this.keyword || '';
-    this.prescService.getPresc(this.keyword, this.skip, maxResultCount).subscribe((data: any) => {
-      this.records = data.result;
-      this.totalCount = data.result.length;
-    });
+    const skipCount = lazyload ? lazyload?.first : this.table?.first;
+    const maxResultCount = 20;
+    this.prescService.getPresc(this.keyword, skipCount, maxResultCount)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      ).subscribe((data: any) => {
+        this.records = data.result.Items;
+        this.totalCount = data.result.Total_count;
+
+        if (!lazyload) {
+          this.first = 0;
+        }
+      });
   }
 
   createOrEditPresc(presc_id?: string, isEdit?: boolean) {
@@ -71,14 +78,14 @@ export class PrescComponent extends AppComponentBase implements OnInit {
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-          this.msgs = [{severity: 'info', summary: 'Confirmed', detail: 'Record deleted'}];
-          this.prescService.deletePresc(presc_id).subscribe(() => {
-            this.showDeleteMessage();
-            this.getDataPage();
-          });
+        this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' }];
+        this.prescService.deletePresc(presc_id).subscribe(() => {
+          this.showDeleteMessage();
+          this.getDataPage();
+        });
       },
       reject: () => {
-          this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
+        this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
       }
     });
   }

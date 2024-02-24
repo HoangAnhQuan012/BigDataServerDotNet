@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'environments/environment';
+import { environment } from 'environments/environment-fastApi';
 import { PrescModel } from '@shared/models/presc.model';
-
-export const FAST_API_URL = new InjectionToken<string>('FAST_API_URL');
 
 @Injectable({
     providedIn: 'root'

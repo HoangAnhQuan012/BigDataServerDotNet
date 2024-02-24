@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, InjectionToken } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CityModel } from '../models/city.model';
-import { environment } from 'environments/environment';
+import { environment } from 'environments/environment-fastApi';
 
 @Injectable({
     providedIn: 'root'

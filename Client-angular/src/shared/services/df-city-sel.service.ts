@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CityModel } from '../models/city.model';
-import { environment } from 'environments/environment';
+import { environment } from 'environments/environment-fastApi';
 import { CityUpdate } from '@shared/models/CityUpdate.model';
 
 @Injectable({
