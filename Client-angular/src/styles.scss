@@ -5,3 +5,28 @@
 * {
     box-sizing: border-box;
 }
+
+$lenght: 1000;
+
+@for $i from 1 through $lenght {
+    .m-t-#{$i} {
+        margin-top: $i + px !important;
+    }
+
+    .m-r-#{$i} {
+        margin-right: $i + px !important;
+    }
+
+    .m-l-#{$i} {
+        margin-left: $i + px !important;
+    }
+
+    .m-b-#{$i} {
+        margin-bottom: $i + px !important;
+    }
+
+    .custom-td-#{$i} {
+        flex: 0 0 $i + px !important;
+        word-break: break-all;
+    }
+}

@@ -6,6 +6,8 @@ import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './users/users.component';
 import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
+import { DfCitySelComponent } from './df-city-sel/df-city-sel.component';
+import { PrescComponent } from './presc/presc.component';
 
 @NgModule({
     imports: [
@@ -14,7 +16,9 @@ import { ChangePasswordComponent } from './users/change-password/change-password
                 path: '',
                 component: AppComponent,
                 children: [
-                    { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard] },
+                    { path: 'virtualize', component: HomeComponent,  canActivate: [AppRouteGuard] },
+                    { path: 'df-city-sel', component: DfCitySelComponent, canActivate: [AppRouteGuard]},
+                    { path: 'presc', component: PrescComponent, canActivate: [AppRouteGuard]},
                     { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] }

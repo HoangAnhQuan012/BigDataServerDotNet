@@ -1,74 +1,107 @@
-import { Component, Injector, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { AppComponentBase } from '@shared/app-component-base';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { RankedPrescService } from '@shared/services/ranked-presc.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
-  templateUrl: './home.component.html',
-  animations: [appModuleAnimation()],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent extends AppComponentBase implements OnInit {
+export class HomeComponent implements OnInit {
 
-  basicData: any;
-  basicOptions: any;
+    ChartRankPresc: any;
+    RankingDistributionOfPrescribers: number[] = [];
+    basicOptions: any;
+
+    chartYearOfExperience: any;
+    YearsOfExpData: number[] = [];
+
+    chartPrescribersToTotalPopulation: any;
+    RatioOfPrescribersToTotalPopulation: number[] = [];
 
 
-  constructor(injector: Injector) {
-    super(injector);
-  }
+    constructor(
+        private rankedPrescService: RankedPrescService) {
+    }
 
-  ngOnInit(): void {
-    this.basicData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-          {
-              label: 'My First dataset',
-              backgroundColor: '#42A5F5',
-              data: [65, 59, 80, 81, 56, 55, 40]
-          },
-          {
-              label: 'My Second dataset',
-              backgroundColor: '#FFA726',
-              data: [28, 48, 40, 19, 86, 27, 90]
-          }
-      ]
-  };
-  }
+    ngOnInit(): void {
+        this.getAllData();
+        console.log('home component');
+    }
 
-  applyDarkTheme() {
-    this.basicOptions = {
-        plugins: {
-            legend: {
-                labels: {
-                    color: '#ebedef'
-                }
-            }
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: '#ebedef'
-                },
-                grid: {
-                    color: 'rgba(255,255,255,0.2)'
+    getAllData() {
+        forkJoin(
+            this.rankedPrescService.getRankingDistributionOfPrescribers(),
+            this.rankedPrescService.getDistributionOfYearsOfExperience(),
+            this.rankedPrescService.getPrescribersToTotalPopulation()
+        ).subscribe(([rankedPresc, yearsOfExperience, prescribersToTotalPopulation]: any) => {
+            this.RankingDistributionOfPrescribers = rankedPresc.result;
+            this.YearsOfExpData = yearsOfExperience.result;
+            this.RatioOfPrescribersToTotalPopulation = prescribersToTotalPopulation.result;
+
+            this.ChartRankPresc = {
+                labels: ['1', '2', '3', '4', '5'],
+                datasets: [
+                    {
+                        label: 'Ranking Distribution of Prescribers',
+                        data: this.RankingDistributionOfPrescribers,
+                        backgroundColor: '#6E85B7',
+                    }
+                ]
+            };
+
+            this.chartYearOfExperience = {
+                labels: ['20-30', '30-40', '40-50'],
+                datasets: [
+                    {
+                        label: 'Distribution of years of experience',
+                        data: this.YearsOfExpData,
+                        backgroundColor: '#FFE194',
+                    }
+                ]
+            };
+
+            this.chartPrescribersToTotalPopulation = {
+                labels: ['0 - 1.25%', '1.25 - 2.5%', '2.5 - 3.75', '> 3.75%'],
+                datasets: [
+                    {
+                        label: 'Ratio of Prescribers to Total Population',
+                        data: this.RatioOfPrescribersToTotalPopulation,
+                        backgroundColor: '#42A5F5',
+                    }
+                ]
+            };
+        });
+    }
+
+    applyDarkTheme() {
+        this.basicOptions = {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#ebedef'
+                    }
                 }
             },
-            y: {
-                ticks: {
-                    color: '#ebedef'
+            scales: {
+                x: {
+                    ticks: {
+                        color: '#ebedef'
+                    },
+                    grid: {
+                        color: 'rgba(255,255,255,0.2)'
+                    }
                 },
-                grid: {
-                    color: 'rgba(255,255,255,0.2)'
+                y: {
+                    ticks: {
+                        color: '#ebedef'
+                    },
+                    grid: {
+                        color: 'rgba(255,255,255,0.2)'
+                    }
                 }
             }
-        }
-    };
-  }
-
-  update() {
-    this.basicData = {
-      labels: [],
-      datasets: []
-    };
-  }
+        };
+    }
 }

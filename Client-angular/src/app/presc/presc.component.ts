@@ -1,0 +1,106 @@
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { ConfirmationService, LazyLoadEvent, Message } from 'primeng/api';
+import { Table } from 'primeng/table';
+import { PrescModel } from '@shared/models/presc.model';
+import { DfPrescSelService } from '@shared/services/df-presc.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { CreateOrEditPrescComponent } from './create-or-edit-presc/create-or-edit-presc.component';
+import { AppComponentBase } from '@shared/app-component-base';
+
+@Component({
+  selector: 'app-presc',
+  templateUrl: './presc.component.html',
+  styleUrls: ['./presc.component.scss']
+})
+export class PrescComponent extends AppComponentBase implements OnInit {
+  @ViewChild('dt') table: Table;
+  records: PrescModel[] = [];
+  paginator = true;
+  loading = false;
+  showCurrentPageReport = true;
+  totalCount = 0;
+  paginatorRows = 20;
+  rowsPerPageOptions = [10, 20, 50, 100, 200, 500, 1000];
+  scrollable = true;
+  scrollHeight = '700px';
+  skip = 0;
+
+  // tslint:disable-next-line:no-inferrable-types
+  keyword: string = '';
+
+  msgs: Message[] = [];
+
+  constructor(
+    injector: Injector,
+    private prescService: DfPrescSelService,
+    private modalService: BsModalService,
+    private confirmationService: ConfirmationService,
+  ) {
+    super(injector);
+   }
+
+  ngOnInit() {
+  }
+
+  getDataPage(lazyload?: LazyLoadEvent) {
+    let maxResultCount = this.table?.rows;
+
+    if (lazyload) {
+      this.skip = lazyload.first ?? this.skip;
+      maxResultCount = lazyload.rows ?? maxResultCount;
+    }
+    this.keyword = this.keyword || '';
+    this.prescService.getPresc(this.keyword, this.skip, maxResultCount).subscribe((data: any) => {
+      this.records = data.result;
+      this.totalCount = data.result.length;
+    });
+  }
+
+  createOrEditPresc(presc_id?: string, isEdit?: boolean) {
+    isEdit = isEdit || false;
+    this._showDialog(presc_id, false, isEdit);
+  }
+
+  viewDetails(presc_id: string) {
+    this._showDialog(presc_id, true);
+  }
+
+  deleteCity(presc_id: string) {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this presc?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+          this.msgs = [{severity: 'info', summary: 'Confirmed', detail: 'Record deleted'}];
+          this.prescService.deletePresc(presc_id).subscribe(() => {
+            this.showDeleteMessage();
+            this.getDataPage();
+          });
+      },
+      reject: () => {
+          this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
+      }
+    });
+  }
+
+  private _showDialog(presc_id: string, isView = false, isEdit?: boolean): void {
+    let createDialog: BsModalRef;
+    createDialog = this.modalService.show(
+      CreateOrEditPrescComponent,
+      {
+        class: 'modal-xl',
+        ignoreBackdropClick: true,
+        initialState: {
+          presc_id,
+          isView,
+          isEdit,
+        },
+      }
+    );
+
+    createDialog.content.onSave.subscribe(() => {
+      this.getDataPage();
+    });
+  }
+
+}

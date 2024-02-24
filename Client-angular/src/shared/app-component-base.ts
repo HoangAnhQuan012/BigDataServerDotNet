@@ -56,4 +56,17 @@ export abstract class AppComponentBase {
     isGranted(permissionName: string): boolean {
         return this.permission.isGranted(permissionName);
     }
+
+    showDeleteMessage() {
+        this.notify.error('Deleted Successfully!');
+    }
+
+    showCreateMessage() {
+        this.notify.success('Saved Successfully!');
+    }
+
+    showUpdateMessage() {
+        this.notify.warn('Updated Successfully!');
+    }
+
 }
