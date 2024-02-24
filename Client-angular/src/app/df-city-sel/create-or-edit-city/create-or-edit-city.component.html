@@ -1,0 +1,50 @@
+<form class="form-horizontal" autocomplete="off" [formGroup]="formData" (ngSubmit)="save()">
+  <abp-modal-header [title]="city ? (isView ? 'View detail: ' + city : 'Update: ' + city) : 'Add new city'" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+  <div class="modal-body fixed-modal-height">
+    <div class="row ui-fluid">
+      <div class="col-md-6">
+        <label for="">City *</label>
+        <input type="text" pInputText class="form-control" formControlName="City">
+        <abp-validation-summary [control]="formData.get('City')"></abp-validation-summary>
+      </div>
+
+      <div class="col-md-6">
+        <label for="">State Id *</label>
+        <input type="text" pInputText class="form-control" formControlName="State_Id">
+        <abp-validation-summary [control]="formData.get('State_Id')"></abp-validation-summary>
+      </div>
+    </div>
+
+    <div class="row ui-fluid">
+      <div class="col-md-6">
+        <label for="">State name *</label>
+        <input type="text" pInputText class="form-control" formControlName="State_Name">
+        <abp-validation-summary [control]="formData.get('State_Name')"></abp-validation-summary>
+      </div>
+
+      <div class="col-md-6">
+        <label for="">Country name *</label>
+        <input type="text" pInputText class="form-control" formControlName="country_name">
+        <abp-validation-summary [control]="formData.get('country_name')"></abp-validation-summary>
+      </div>
+    </div>
+
+    <div class="row ui-fluid">
+      <div class="col-md-6">
+        <label for="">Population *</label>
+        <input type="number" pInputText class="form-control" formControlName="Population">
+        <abp-validation-summary [control]="formData.get('Population')"></abp-validation-summary>
+      </div>
+
+      <div class="col-md-6">
+        <label for="">Zips *</label>
+        <input type="text" pInputText class="form-control" formControlName="Zips">
+        <abp-validation-summary [control]="formData.get('Zips')"></abp-validation-summary>
+      </div>
+    </div>
+  </div>
+  <abp-modal-footer [cancelLabel]="'Close'" (onCancelClick)="bsModalRef.hide()" [saveDisabled]="formData.invalid"
+    (onSaveClick)="save()" [saveDisabled]="formData.invalid" [saveLabel]="'Save'"
+    [saveHidden]="saveHidden">
+  </abp-modal-footer>
+</form>

@@ -1,0 +1,89 @@
+<form class="form-horizontal" autocomplete="off" [formGroup]="formData" (ngSubmit)="save()">
+  <abp-modal-header [title]="presc_id ? (isView ? 'View detail: ' + getValue.presc_fullname : 'Update: ' + getValue.presc_fullname) : 'Add new city'" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+  <div class="modal-body fixed-modal-height">
+    <div class="row ui-fluid">
+      <div class="col-md-6">
+        <label for="">Presc Id *</label>
+        <input type="text" pInputText class="form-control" formControlName="Presc_Id">
+        <abp-validation-summary [control]="formData.get('Presc_Id')"></abp-validation-summary>
+      </div>
+
+      <div class="col-md-6">
+        <label for="">Presc city *</label>
+        <input type="text" pInputText class="form-control" formControlName="presc_city">
+        <abp-validation-summary [control]="formData.get('presc_city')"></abp-validation-summary>
+      </div>
+    </div>
+
+    <div class="row ui-fluid">
+      <div class="col-md-6">
+        <label for="">Presc state *</label>
+        <input type="text" pInputText class="form-control" formControlName="presc_state">
+        <abp-validation-summary [control]="formData.get('presc_state')"></abp-validation-summary>
+      </div>
+
+      <div class="col-md-6">
+        <label for="">Presc spclt *</label>
+        <input type="text" pInputText class="form-control" formControlName="presc_spclt">
+        <abp-validation-summary [control]="formData.get('presc_spclt')"></abp-validation-summary>
+      </div>
+    </div>
+
+    <div class="row ui-fluid">
+      <div class="col-md-6">
+        <label for="">Drug name *</label>
+        <input type="text" pInputText class="form-control" formControlName="drug_name">
+        <abp-validation-summary [control]="formData.get('drug_name')"></abp-validation-summary>
+      </div>
+
+      <div class="col-md-6">
+        <label for="">TX CNT *</label>
+        <input type="number" pInputText class="form-control" formControlName="tx_cnt">
+        <abp-validation-summary [control]="formData.get('tx_cnt')"></abp-validation-summary>
+      </div>
+    </div>
+
+    <div class="row ui-fluid">
+      <div class="col-md-6">
+        <label for="">Total day supply *</label>
+        <input type="number" pInputText class="form-control" formControlName="total_day_supply">
+        <abp-validation-summary [control]="formData.get('total_day_supply')"></abp-validation-summary>
+      </div>
+
+      <div class="col-md-6">
+        <label for="">Total_Drug_Cost *</label>
+        <input type="number" pInputText class="form-control" formControlName="total_drug_cost">
+        <abp-validation-summary [control]="formData.get('total_drug_cost')"></abp-validation-summary>
+      </div>
+    </div>
+
+    <div class="row ui-fluid">
+      <div class="col-md-6">
+        <label for="">Years of Exp *</label>
+        <input type="number" pInputText class="form-control" formControlName="years_of_exp">
+        <abp-validation-summary [control]="formData.get('years_of_exp')"></abp-validation-summary>
+      </div>
+
+      <div class="col-md-6">
+        <label for="">Country name *</label>
+        <input type="text" pInputText class="form-control" formControlName="Country_name">
+        <abp-validation-summary [control]="formData.get('Country_name')"></abp-validation-summary>
+      </div>
+    </div>
+
+    <div class="row ui-fluid">
+      <div class="col-md-6">
+        <label for="">Presc fullname *</label>
+        <input type="text" pInputText class="form-control" formControlName="presc_fullname">
+        <abp-validation-summary [control]="formData.get('presc_fullname')"></abp-validation-summary>
+      </div>
+
+      <div class="col-md-6">
+      </div>
+    </div>
+  </div>
+  <abp-modal-footer [cancelLabel]="'Close'" (onCancelClick)="bsModalRef.hide()" [saveDisabled]="formData.invalid"
+    (onSaveClick)="save()" [saveDisabled]="formData.invalid" [saveLabel]="'Save'"
+    [saveHidden]="saveHidden">
+  </abp-modal-footer>
+</form>

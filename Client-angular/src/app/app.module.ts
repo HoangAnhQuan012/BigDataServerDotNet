@@ -36,6 +36,10 @@ import { FooterComponent } from './layout/footer.component';
 import { SidebarComponent } from './layout/sidebar.component';
 import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
+import { DfCitySelComponent } from './df-city-sel/df-city-sel.component';
+import { PrescComponent } from './presc/presc.component';
+import { CreateOrEditCityComponent } from './df-city-sel/create-or-edit-city/create-or-edit-city.component';
+import { CreateOrEditPrescComponent } from './presc/create-or-edit-presc/create-or-edit-presc.component';
 
 @NgModule({
     declarations: [
@@ -63,8 +67,12 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
         FooterComponent,
         SidebarComponent,
         SidebarLogoComponent,
-        SidebarMenuComponent
-    ],
+        SidebarMenuComponent,
+        DfCitySelComponent,
+        PrescComponent,
+        CreateOrEditCityComponent,
+        CreateOrEditPrescComponent
+   ],
     imports: [
         CommonModule,
         FormsModule,

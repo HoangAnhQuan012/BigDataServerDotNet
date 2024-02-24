@@ -14,22 +14,34 @@ import { AbpValidationSummaryComponent } from './components/validation/abp-valid
 import { AbpModalHeaderComponent } from './components/modal/abp-modal-header.component';
 import { AbpModalFooterComponent } from './components/modal/abp-modal-footer.component';
 import { LayoutStoreService } from './layout/layout-store.service';
-import { FastApiService } from './services/fastApi.service';
+import { DfCitySelService } from './services/df-city-sel.service';
+import { DfPrescSelService } from './services/df-presc.service';
+import { RankedPrescService } from './services/ranked-presc.service';
 
 import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 // PrimeNG
 import { ButtonModule } from 'primeng/button';
 import { ChartModule } from 'primeng/chart';
+import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import { CalendarModule } from 'primeng/calendar';
+import { MultiSelectModule } from 'primeng/multiselect';
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         NgxPaginationModule,
         // PrimeNG
+        ConfirmDialogModule,
         ButtonModule,
-        ChartModule
+        ChartModule,
+        TableModule,
+        CalendarModule,
+        MultiSelectModule,
     ],
     declarations: [
         AbpPaginationControlsComponent,
@@ -39,6 +51,7 @@ import { ChartModule } from 'primeng/chart';
         LocalizePipe,
         BusyDirective,
         EqualValidator,
+        TruncatePipe,
     ],
     exports: [
         AbpPaginationControlsComponent,
@@ -48,10 +61,16 @@ import { ChartModule } from 'primeng/chart';
         LocalizePipe,
         BusyDirective,
         EqualValidator,
+        TruncatePipe,
         // PrimeNG
         ButtonModule,
-        ChartModule
-    ]
+        ChartModule,
+        TableModule,
+        ConfirmDialogModule,
+        CalendarModule,
+        MultiSelectModule,
+    ],
+    providers: [ConfirmationService, MessageService]
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders<SharedModule> {
@@ -63,7 +82,9 @@ export class SharedModule {
                 AppAuthService,
                 AppRouteGuard,
                 LayoutStoreService,
-                FastApiService
+                DfCitySelService,
+                DfPrescSelService,
+                RankedPrescService
             ]
         };
     }
