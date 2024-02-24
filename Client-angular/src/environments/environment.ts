@@ -6,6 +6,5 @@
 export const environment = {
     production: false,
     hmr: false,
-    appConfig: 'appconfig.json',
-    fastApiUrl: 'http://127.0.0.1:8000',
+    appConfig: 'appconfig.json'
 };

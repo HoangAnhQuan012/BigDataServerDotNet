@@ -38,10 +38,9 @@
                         (keyup.enter)="getDataPage()"
                 />
             </div>
-                <p-table #dt [value]="records" [lazy]="true" (onLazyLoad)="getDataPage($event)"
-                  [paginator]="paginator" [loading]="loading" [(first)]="skip"
-                  [rows]="paginatorRows" [totalRecords]="totalCount" [rowsPerPageOptions]="rowsPerPageOptions"
-                  [scrollable]="scrollable" scrollHeight="{{scrollHeight}}" styleClass="p-datatable-gridlines">
+                <p-table #dt [value]="records" (onLazyLoad)="getDataPage($event)" dataKey="id" [rows]="20"
+                [(first)]="first" [loading]="loading" [lazy]="true" styleClass="p-datatable-gridlines" [paginator]="totalCount > 0"
+                [totalRecords]="totalCount" [showFirstLastIcon]="false" responsiveLayout="scroll" [scrollable]="scrollable" scrollHeight="{{scrollHeight}}">
 
                   <ng-template pTemplate="header">
                     <tr>

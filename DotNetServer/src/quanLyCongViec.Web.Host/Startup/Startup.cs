@@ -118,7 +118,7 @@ namespace quanLyCongViec.Web.Host.Startup
             app.UseSwaggerUI(options =>
             {
                 // specifying the Swagger JSON endpoint.
-                options.SwaggerEndpoint($"/swagger/{_apiVersion}/swagger.json", $"quanLyCongViec API {_apiVersion}");
+                options.SwaggerEndpoint($"/swagger/{_apiVersion}/swagger.json", $"Analyze public data API {_apiVersion}");
                 options.IndexStream = () => Assembly.GetExecutingAssembly()
                     .GetManifestResourceStream("quanLyCongViec.Web.Host.wwwroot.swagger.ui.index.html");
                 options.DisplayRequestDuration(); // Controls the display of the request duration (in milliseconds) for "Try it out" requests.  
@@ -132,12 +132,12 @@ namespace quanLyCongViec.Web.Host.Startup
                 options.SwaggerDoc(_apiVersion, new OpenApiInfo
                 {
                     Version = _apiVersion,
-                    Title = "quanLyCongViec API",
-                    Description = "quanLyCongViec",
+                    Title = "Analyze public data API",
+                    Description = "Analyze public data",
                     // uncomment if needed TermsOfService = new Uri("https://example.com/terms"),
                     Contact = new OpenApiContact
                     {
-                        Name = "quanLyCongViec",
+                        Name = "Analyze public data",
                         Email = string.Empty,
                         Url = new Uri("https://twitter.com/aspboilerplate"),
                     },
